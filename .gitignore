@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node.js / React / TypeScript
+node_modules/
+dist/
+build/
+coverage/
+.next/
+.vite/
+.turbo/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Vercel
+.vercel/
+
+# Logs y archivos temporales
+*.log
+*.tmp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
