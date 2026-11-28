@@ -5,12 +5,12 @@ import {
   ChevronRight,
   Footprints,
   Layers,
-  Map as MapIcon,
   Route,
   SlidersHorizontal,
   Sparkles,
 } from 'lucide-react'
 import type { MapLayer, RouteAlgorithm } from '../types/route'
+import MapaLeaflet from './LeafletMap'
 
 interface RoutePlannerSectionProps {
   activeLayer: MapLayer
@@ -104,47 +104,10 @@ export function RoutePlannerSection({
         </div>
 
         <div className="relative h-[460px] w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-inner sm:h-[520px]">
-          {/* Placeholder visual del futuro mapa */}
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center"
-            style={{
-              backgroundImage:
-                'radial-gradient(circle at 1px 1px, rgb(148 163 184 / 0.35) 1px, transparent 0)',
-              backgroundSize: '24px 24px',
-            }}
-          >
-            <div className="max-w-md rounded-2xl border border-slate-200/90 bg-white/90 p-6 shadow-sm backdrop-blur-sm">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-100 text-[#003B5C]">
-                <MapIcon className="h-6 w-6" />
-              </div>
-              <p className="text-base font-semibold text-slate-800">
-                Mapa interactivo próximamente
-              </p>
-              <p className="mt-1.5 text-sm text-slate-500">
-                Aquí se renderizará el mapa de Ciudad Universitaria con las
-                casetas Lobobici, senderos peatonales y ciclovías.
-              </p>
-
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs">
-                {activeAlgorithm && (
-                  <span className="rounded-md bg-emerald-50 px-2.5 py-1 font-medium text-emerald-700 ring-1 ring-emerald-200">
-                    Algoritmo:{' '}
-                    {activeAlgorithm === 'dijkstra' ? 'Dijkstra' : 'A*'}
-                  </span>
-                )}
-                {disableStations && (
-                  <span className="rounded-md bg-amber-50 px-2.5 py-1 font-medium text-amber-700 ring-1 ring-amber-200">
-                    Casetas deshabilitadas
-                  </span>
-                )}
-                {disableRoutes && (
-                  <span className="rounded-md bg-rose-50 px-2.5 py-1 font-medium text-rose-700 ring-1 ring-rose-200">
-                    Rutas deshabilitadas
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
+          <MapaLeaflet
+            activeLayer={activeLayer}
+            activeAlgorithm={activeAlgorithm}
+          />
 
           {/* Botón para expandir cuando el menú emergente está colapsado hacia la derecha */}
           {!isConfigOpen && (
@@ -152,7 +115,7 @@ export function RoutePlannerSection({
               type="button"
               onClick={() => setIsConfigOpen(true)}
               aria-label="Abrir configuración del mapa"
-              className="absolute right-0 top-4 z-20 flex cursor-pointer items-center gap-2 rounded-l-xl border border-r-0 border-slate-200 bg-white/95 px-3 py-2.5 text-sm font-medium text-slate-700 shadow-lg backdrop-blur-md transition hover:bg-slate-50 hover:text-[#003B5C]"
+              className="absolute right-0 top-4 z-[1001] flex cursor-pointer items-center gap-2 rounded-l-xl border border-r-0 border-slate-200 bg-white/95 px-3 py-2.5 text-sm font-medium text-slate-700 shadow-lg backdrop-blur-md transition hover:bg-slate-50 hover:text-[#003B5C]"
             >
               <ChevronLeft className="h-4 w-4" />
               <SlidersHorizontal className="h-4 w-4" />
@@ -164,7 +127,7 @@ export function RoutePlannerSection({
           <aside
             aria-label="Configuración de ruta"
             aria-hidden={!isConfigOpen}
-            className={`absolute right-3 top-3 z-20 w-72 max-w-[calc(100%-1.5rem)] rounded-xl border border-slate-200 bg-white/95 p-4 shadow-xl backdrop-blur-md transition-all duration-300 ease-in-out sm:right-4 sm:top-4 sm:w-80 ${
+            className={`absolute right-3 top-3 z-[1001] w-72 max-w-[calc(100%-1.5rem)] rounded-xl border border-slate-200 bg-white/95 p-4 shadow-xl backdrop-blur-md transition-all duration-300 ease-in-out sm:right-4 sm:top-4 sm:w-80 ${
               isConfigOpen
                 ? 'translate-x-0 opacity-100'
                 : 'pointer-events-none translate-x-[115%] opacity-0'
